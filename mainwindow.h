@@ -21,6 +21,7 @@ private slots:
     void on_pushButton_clicked();
     void processFile(const QString& File_name);
 
+
 private:
     Ui::MainWindow *ui;
 };

@@ -1,14 +1,18 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+//#include "projectpage.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDir>
 #include <QFile>
+#include <Qlabel>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+   // ui->setupUi(this);
+    //Projectpage *FormForm = new Projectpage;
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +29,9 @@ void MainWindow::on_pushButton_clicked()
         if (QFile::exists(File_name)) {
             // File exists, process it
             processFile(File_name);
-            QMessageBox::information(this, "File has been Successfully uploaded", File_name);
+            //QMessageBox::information(this, "File has been Successfully uploaded", File_name);
+            QLabel *Upload = new QLabel(this);
+            Upload->setText("File has been Successfully uploaded");
         } else {
             // File does not exist
             QMessageBox::warning(this, tr("Error"), tr("File not found!"));
