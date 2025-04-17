@@ -2,19 +2,22 @@
 #include <string>
 #include <memory>
 #include "SourceCodeFile.h"
-//#include "AnalysisResult.h"
+#include "AnalysisResult.h"
 
 class StaticAnalysisTool {
 protected:
     std::string toolName;
     std::string version;
     std::string outputFormat;
+    int exitCode = -1;
     
 public:
     StaticAnalysisTool(std::string name, std::string setVersion, std::string format);
     virtual ~StaticAnalysisTool() = default;
 
     //virtual std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) = 0;
+    std::string executeCommand(const char* cmd);
+    virtual AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) = 0;
     
     std::string getToolName() const { return toolName; }
     std::string getVersion() const { return version; }
@@ -42,4 +45,5 @@ class GCCAnalyzer : public StaticAnalysisTool {
         ~GCCAnalyzer() override = default;
 
         //std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) override;
+        AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) override;
 };
