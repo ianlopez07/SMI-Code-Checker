@@ -18,9 +18,10 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_UploadFileBtn_clicked();
     void processFile(const QString& File_name);
 
+    void on_ProjectPageBtn_clicked();
 
 private:
     Ui::MainWindow *ui;
