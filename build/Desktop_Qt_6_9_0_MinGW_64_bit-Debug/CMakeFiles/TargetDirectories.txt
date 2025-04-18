@@ -1,9 +1,0 @@
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/SMIUI.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/list_install_components.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/install.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/install/local.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/install/strip.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/SMIUI_autogen_timestamp_deps.dir
-C:/Users/MNdeC/OneDrive/Documents/JuniorYear/Spring/Secure/SMIUI/build/Desktop_Qt_6_9_0_MinGW_64_bit-Debug/CMakeFiles/SMIUI_autogen.dir
