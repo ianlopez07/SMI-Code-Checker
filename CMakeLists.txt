@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.16)
 
 project(SMIUI VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_PREFIX_PATH "C:/Qt/6.9.0/mingw_64/lib/cmake/Qt6" ${CMAKE_PREFIX_PATH})
+set(CMAKE_C_COMPILER "C:/Qt/Tools/mingw1310_64/bin/gcc.exe")
+set(CMAKE_CXX_COMPILER "C:/Qt/Tools/mingw1310_64/bin/g++.exe")
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -20,11 +24,10 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(SMIUI
+    qt_add_executable(SMI-Code-Checker
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         projectpage.h projectpage.cpp projectpage.ui
-        reportpage.h reportpage.cpp reportpage.ui
         report.h report.cpp report.ui
     )
 # Define target properties for Android with Qt 6 as:
@@ -33,27 +36,27 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(SMIUI SHARED
+        add_library(SMI-Code-Checker SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(SMIUI
+        add_executable(SMI-Code-Checker
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(SMIUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(SMI-Code-Checker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.SMIUI)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.SMI-Code-Checker)
 endif()
-set_target_properties(SMIUI PROPERTIES
+set_target_properties(SMI-Code-Checker PROPERTIES
     ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -62,12 +65,12 @@ set_target_properties(SMIUI PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS SMIUI
+install(TARGETS SMI-Code-Checker
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(SMIUI)
+    qt_finalize_executable(SMI-Code-Checker)
 endif()

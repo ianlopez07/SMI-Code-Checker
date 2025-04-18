@@ -62,5 +62,8 @@
         "xutility": "cpp",
         "array": "cpp",
         "qmainwindow": "cpp"
+    },
+    "cmake.configureEnvironment": {
+    "Qt6_DIR": "C:/Qt/6.9.0/mingw_64/lib/cmake/Qt6/Qt6Config.cmake"
     }
 }
