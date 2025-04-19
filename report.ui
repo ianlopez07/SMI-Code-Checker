@@ -57,7 +57,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
    </property>
    <property name="text">
-    <string>.txt</string>
+    <string>.csv</string>
    </property>
   </widget>
   <widget class="QRadioButton" name="radioButton_2">
@@ -66,7 +66,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      <x>690</x>
      <y>480</y>
      <width>71</width>
-     <height>26</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -78,7 +78,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
    </property>
    <property name="text">
-    <string>PDF</string>
+    <string>.json</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
@@ -107,7 +107,8 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0 rgba(0, 20, 31, 255), stop:1 rgba(255, 255, 255, 255));</string>
+    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 255, 255, 255));
+color: rgb(0, 0, 0);</string>
    </property>
    <property name="plainText">
     <string>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.

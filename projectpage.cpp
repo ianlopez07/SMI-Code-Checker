@@ -13,6 +13,7 @@ ProjectPage::ProjectPage(QWidget *parent)
     Report *ReportForm = new Report;
     connect(ui ->ReportspageBtn, SIGNAL(clicked(bool)),this, SLOT(hide()));
     connect(ui ->ReportspageBtn, SIGNAL(clicked(bool)),ReportForm, SLOT(show()));
+
     //Sets the progress bar, reports page button, and anaylize button's visibility to false
     ui->progressBar->setVisible(false);
     ui->ReportspageBtn->setVisible(false);

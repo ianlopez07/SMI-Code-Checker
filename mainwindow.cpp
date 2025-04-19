@@ -5,6 +5,8 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFile>
+#include <QfileInfo>
+#include <QTextStream>
 #include <Qlabel>
 #include <QTimer>
 
