@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "SourceCodeFile.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,6 +18,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    //const SourceCodeFile getFile() const { return inpFile; }
+
 private slots:
     void on_UploadFileBtn_clicked();
     void processFile(const QString& File_name);
@@ -25,5 +28,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    //SourceCodeFile inpFile;
 };
 #endif // MAINWINDOW_H

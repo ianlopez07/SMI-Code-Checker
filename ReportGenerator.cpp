@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <nlohmann/json.hpp> // I think I need this for json file generation  
+//#include <nlohmann/json.hpp> // I think I need this for json file generation  
 
 ReportGenerator::ReportGenerator(const std::string& format)
     : reportFormat(format) {}
@@ -14,9 +14,9 @@ void ReportGenerator::addAnalysisResult(std::shared_ptr<AnalysisResult> result) 
 std::string ReportGenerator::generateReport(const std::string& outputPath) const {
     if (reportFormat == "PDF") {
         generatePDFReport(outputPath);
-    } else if (reportFormat == "JSON") {
+    } /*else if (reportFormat == "JSON") {
         generateJSONReport(outputPath);
-    } else if (reportFormat == "CSV") {
+    }*/ else if (reportFormat == "CSV") {
         generateCSVReport(outputPath);
     } else {
         std::cerr << "Unsupported format: " << reportFormat << std::endl;
@@ -48,7 +48,7 @@ void ReportGenerator::generateCSVReport(const std::string& outputPath) const {
 }
 
 // JSON ??
-void ReportGenerator::generateJSONReport(const std::string& outputPath) const {
+/*void ReportGenerator::generateJSONReport(const std::string& outputPath) const {
     nlohmann::json j;
 
     for (const auto& result : analysisResults) {
@@ -68,7 +68,7 @@ void ReportGenerator::generateJSONReport(const std::string& outputPath) const {
     std::ofstream out(outputPath);
     out << j.dump(4);  
     out.close();
-}
+}*/
 
 // MPDF generation
 void ReportGenerator::generatePDFReport(const std::string& outputPath) const {

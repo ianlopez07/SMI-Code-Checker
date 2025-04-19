@@ -17,6 +17,7 @@ public:
     
     bool validateFile() const; // Validates C/C++ file
     
+    void setFilePath(const std::string& path);
     const std::string& getFileName() const { return fileName; }
     const std::string& getFilePath() const { return filePathS; }
     const std::string& getFileContent() const { return fileContent; }

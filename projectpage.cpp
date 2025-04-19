@@ -3,7 +3,7 @@
 #include "report.h"
 #include <QTimer>
 
-ProjectPage::ProjectPage(QWidget *parent)
+ProjectPage::ProjectPage(QWidget *parent)//, *SourceCodeFile inpFile)
     : QWidget(parent)
     , ui(new Ui::ProjectPage)
 {
@@ -22,7 +22,7 @@ ProjectPage::ProjectPage(QWidget *parent)
     //if analyize button is clicked it points to the function on_AnalyizeBtn_clicked
     connect(ui->AnalyizeBtn, &QPushButton::clicked, this, &ProjectPage::on_AnalyizeBtn_clicked);
 
-
+    //file = inpFile;
 }
 
 ProjectPage::~ProjectPage()
@@ -61,6 +61,10 @@ void ProjectPage::on_AnalyizeBtn_clicked()
         }
     });
     timer->start(500);
+
+    /*if(ui->GCC->isChecked()) {
+        AnalysisResult gcc_result = gcc.runAnalysis(file);
+    }*/
 }
 
 

@@ -47,6 +47,7 @@ void MainWindow::on_UploadFileBtn_clicked()
             // File exists, process it
             processFile(File_name);
             QMessageBox::information(this, "File has been Successfully uploaded", File_name);
+            //inpFile.setFilePath(File_name);
             ui->GoprojectPage->setVisible(true);
             ui->ProjectPageBtn->setVisible(true);
 
