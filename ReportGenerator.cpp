@@ -31,7 +31,7 @@ void ReportGenerator::exportReport(const std::string& outputPath) const {
 
 // CSV 
 void ReportGenerator::generateCSVReport(const std::string& outputPath) const {
-    std::ofstream out(outputPath);
+    std::ofstream out(outputPath + "Report.csv");
     out << "ToolName,VulnerabilityType,Line,Description,Severity\n";
 
     for (const auto& result : analysisResults) {

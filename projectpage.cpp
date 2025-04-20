@@ -11,7 +11,7 @@ ProjectPage::ProjectPage(MainWindow* mainw, QWidget *parent)
     //setting up the UI
     ui->setupUi(this);
     //When Reports page button is clicked it will open a new window to reports page
-    Report *ReportForm = new Report;
+    Report *ReportForm = new Report(this, nullptr);
     connect(ui ->ReportspageBtn, SIGNAL(clicked(bool)),this, SLOT(hide()));
     connect(ui ->ReportspageBtn, SIGNAL(clicked(bool)),ReportForm, SLOT(show()));
 

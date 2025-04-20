@@ -20,6 +20,8 @@ public:
     explicit ProjectPage(MainWindow* mainw, QWidget *parent = nullptr);
     ~ProjectPage();
 
+    AnalysisResult* getGCCResult() { return &gcc_result; }
+
 public:
     Ui::ProjectPage *ui;
 private slots:
@@ -33,7 +35,7 @@ private:
     MainWindow* m_mainw;  // Store the pointer to MainWindow
     SourceCodeFile* file = nullptr;  // Use a pointer instead of object instance
     GCCAnalyzer gcc{"test", "test", "test"};
-    AnalysisResult* gcc_result = nullptr;
+    AnalysisResult gcc_result{"GCC"};
 };
 
 #endif // PROJECTPAGE_H
