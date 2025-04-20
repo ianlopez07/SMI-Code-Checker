@@ -33,6 +33,7 @@ private:
     MainWindow* m_mainw;  // Store the pointer to MainWindow
     SourceCodeFile* file = nullptr;  // Use a pointer instead of object instance
     GCCAnalyzer gcc{"test", "test", "test"};
+    AnalysisResult* gcc_result = nullptr;
 };
 
 #endif // PROJECTPAGE_H

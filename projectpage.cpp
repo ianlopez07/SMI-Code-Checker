@@ -67,7 +67,7 @@ void ProjectPage::on_AnalyizeBtn_clicked()
     timer->start(500);
 
     if(ui->GCC->isChecked()) {
-        AnalysisResult gcc_result = gcc.runAnalysis(*file);
+        gcc_result = gcc.runAnalysis(*file);
     }
 }
 
