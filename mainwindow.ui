@@ -14,8 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">;
-background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
+   <string notr="true">background-color: rgb(25, 76, 76);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="UploadFileBtn">
@@ -28,10 +27,11 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
+     <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(0, 204, 150);</string>
     </property>
     <property name="text">
-     <string>UpLoad File</string>
+     <string>Upload File</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -49,7 +49,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
+     <string notr="true">background-color: rgb(25, 76, 76);</string>
     </property>
     <property name="text">
      <string> To begin please Upload a File</string>
@@ -61,7 +61,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>170</x>
       <y>10</y>
       <width>631</width>
       <height>101</height>
@@ -74,7 +74,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
+     <string notr="true">background-color: rgb(25, 76, 76);</string>
     </property>
     <property name="text">
      <string>Welcome to SMI Code Checker!</string>
@@ -95,7 +95,7 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
+     <string notr="true">background-color: rgb(25, 76, 76);</string>
     </property>
     <property name="text">
      <string>Once file is uploaded please proceed to project page</string>
@@ -114,7 +114,8 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));</string>
+     <string notr="true">background-color: rgb(0, 204, 150);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Go to Project Page</string>
@@ -136,8 +137,8 @@ background-color: qlineargradient(spread:pad, x1:0.282, y1:0.324, x2:1, y2:1, st
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:1, stop:0.455399 rgba(0, 31, 22, 232), stop:1 rgba(144, 255, 238, 251));
-color: rgb(170, 0, 0);</string>
+     <string notr="true">background-color: rgb(25, 76, 76);
+color: rgb(255, 255, 0);</string>
     </property>
     <property name="text">
      <string>Disclaimer! Please Only Upload .c or .cpp Files!</string>

@@ -1,20 +1,35 @@
 #include "report.h"
 #include "ui_report.h"
-#include "projectpage.h"
 
-Report::Report(ProjectPage* ppage, QWidget *parent)
-    : QWidget(parent), m_ppage(ppage),
+Report::Report(QWidget *parent)
+    : QWidget(parent)
     , ui(new Ui::Report)
 {
     ui->setupUi(this);
 
-    if (m_ppage->gcc_result) {
-        gcc_res = m_ppage->gcc_result;
-    }
+
 }
 
 Report::~Report()
 {
     delete ui;
+}
+
+
+void Report::on_csvRadioBtn_clicked()
+{
+
+}
+
+
+void Report::on_jsonRadioBtn_clicked()
+{
+
+}
+
+
+void Report::on_DownloadBtn_clicked()
+{
+
 }
 

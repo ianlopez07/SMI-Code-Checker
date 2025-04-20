@@ -2,7 +2,6 @@
 #define REPORT_H
 
 #include <QWidget>
-#include "AnalysisResult.h"
 
 namespace Ui {
 class Report;
@@ -13,16 +12,16 @@ class Report : public QWidget
     Q_OBJECT
 
 public:
-    explicit Report(ProjectPage* ppage, QWidget *parent = nullptr);
+    explicit Report(QWidget *parent = nullptr);
     ~Report();
 
 public:
     Ui::Report *ui;
 private slots:
 
-private:
-    ProjectPage* m_ppage;
-    AnalysisResult* gcc_res = nullptr;
+    void on_csvRadioBtn_clicked();
+    void on_jsonRadioBtn_clicked();
+    void on_DownloadBtn_clicked();
 };
 
 #endif // REPORT_H
