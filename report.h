@@ -30,6 +30,8 @@ private slots:
 private:
     ProjectPage* ppage;
     AnalysisResult* gcc_res = nullptr;
+    AnalysisResult* cppcheck_res = nullptr;
+    AnalysisResult* flawfinder_res = nullptr;
     ReportGenerator* pdf_gen = new ReportGenerator("PDF");
     ReportGenerator* csv_gen = new ReportGenerator("CSV");
 };

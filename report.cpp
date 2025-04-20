@@ -29,23 +29,17 @@ void Report::on_csvRadioBtn_clicked()
 {
     qDebug() << "CSV radio button clicked";
     
-    if (ppage && ppage->getGCCResult()) {
-        gcc_res = ppage->getGCCResult();  // Store pointer
-        qDebug() << "Got GCC result pointer from ProjectPage";
-        qDebug() << "Tool name:" << QString::fromStdString(gcc_res->getToolName());
-        qDebug() << "Vulnerability count:" << gcc_res->getVulnerabilityCount();
+    if (ppage) {
+        gcc_res = ppage->getGCCResult();
+        cppcheck_res = ppage->getCPPCheckResult();
+        flawfinder_res = ppage->getFlawfinderResult();
         
-        // Display vulnerabilities in debug output
-        const auto& vulns = gcc_res->getVulnerabilities();
-        for (size_t i = 0; i < vulns.size(); i++) {
-            qDebug() << "Vulnerability" << i + 1 << ":";
-            qDebug() << "  Type:" << QString::fromStdString(vulns[i].getType());
-            qDebug() << "  Line:" << vulns[i].getLine();
-            qDebug() << "  Description:" << QString::fromStdString(vulns[i].getDescription());
-            qDebug() << "  Severity:" << QString::fromStdString(vulns[i].getSeverity());
-        }
+        qDebug() << "Results obtained from ProjectPage:";
+        qDebug() << "- GCC: " << (gcc_res ? gcc_res->getVulnerabilityCount() : 0) << " vulnerabilities";
+        qDebug() << "- CPPCheck: " << (cppcheck_res ? cppcheck_res->getVulnerabilityCount() : 0) << " vulnerabilities";
+        qDebug() << "- Flawfinder: " << (flawfinder_res ? flawfinder_res->getVulnerabilityCount() : 0) << " vulnerabilities";
     } else {
-        qDebug() << "Warning: Unable to get GCC result from ProjectPage";
+        qDebug() << "Warning: ProjectPage pointer is null";
     }
 }
 
@@ -62,16 +56,31 @@ void Report::on_DownloadBtn_clicked()
     if(ui->csvRadioBtn->isChecked()) {
         qDebug() << "CSV format selected";
         
-        if (!gcc_res) {
-            qDebug() << "Error: gcc_res is null";
-            QMessageBox::warning(this, tr("Error"), tr("No analysis results available"));
-            return;
+        // Add all available results
+        bool hasResults = false;
+        
+        if (gcc_res && gcc_res->getVulnerabilityCount() > 0) {
+            csv_gen->addAnalysisResult(*gcc_res);
+            hasResults = true;
+            qDebug() << "Added" << gcc_res->getVulnerabilityCount() << "GCC vulnerabilities";
+        }
+
+        if (flawfinder_res && flawfinder_res->getVulnerabilityCount() > 0) {
+            csv_gen->addAnalysisResult(*flawfinder_res);
+            hasResults = true;
+            qDebug() << "Added" << flawfinder_res->getVulnerabilityCount() << "Flawfinder vulnerabilities";
         }
         
-        qDebug() << "Adding analysis result to CSV generator";
-        qDebug() << "Vulnerability count:" << gcc_res->getVulnerabilityCount();
+        if (cppcheck_res && cppcheck_res->getVulnerabilityCount() > 0) {
+            csv_gen->addAnalysisResult(*cppcheck_res);
+            hasResults = true;
+            qDebug() << "Added" << cppcheck_res->getVulnerabilityCount() << "CPPCheck vulnerabilities";
+        }
         
-        csv_gen->addAnalysisResult(*gcc_res);
+        if (!hasResults) {
+            QMessageBox::warning(this, tr("Warning"), tr("No vulnerabilities found to report"));
+            return;
+        }
         
         // Use file dialog to get save path
         QString savePath = QFileDialog::getSaveFileName(this,
@@ -80,6 +89,11 @@ void Report::on_DownloadBtn_clicked()
             tr("CSV Files (*.csv)"));
             
         if (!savePath.isEmpty()) {
+            // Make sure the path has .csv extension
+            if (!savePath.endsWith(".csv", Qt::CaseInsensitive)) {
+                savePath += ".csv";
+            }
+            
             qDebug() << "Selected path:" << savePath;
             std::string outputPath = savePath.toStdString();
             
@@ -93,9 +107,5 @@ void Report::on_DownloadBtn_clicked()
         } else {
             qDebug() << "No save path selected";
         }
-    } else if(ui->jsonRadioBtn->isChecked()) {
-        QMessageBox::information(this, tr("Info"), tr("JSON export not implemented yet"));
-    } else {
-        QMessageBox::warning(this, tr("Warning"), tr("Please select a report format"));
     }
 }

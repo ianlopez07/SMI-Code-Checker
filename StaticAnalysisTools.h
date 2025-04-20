@@ -15,7 +15,6 @@ public:
     StaticAnalysisTool(std::string name, std::string setVersion, std::string format);
     virtual ~StaticAnalysisTool() = default;
 
-    //virtual std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) = 0;
     std::string executeCommand(std::string cmd);
     virtual AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) = 0;
     
@@ -28,7 +27,7 @@ class CPPCheckTool : public StaticAnalysisTool {
         CPPCheckTool(std::string name, std::string setVersion, std::string format);
         ~CPPCheckTool() override = default;
 
-        //std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) override;
+        AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) override;
     };
 
 class Flawfinder : public StaticAnalysisTool {
@@ -36,7 +35,7 @@ class Flawfinder : public StaticAnalysisTool {
         Flawfinder(std::string name, std::string setVersion, std::string format);
         ~Flawfinder() override = default;
 
-        //std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) override;
+        AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) override;
 };
 
 class GCCAnalyzer : public StaticAnalysisTool {
@@ -44,6 +43,5 @@ class GCCAnalyzer : public StaticAnalysisTool {
         GCCAnalyzer(std::string name, std::string setVersion, std::string format);
         ~GCCAnalyzer() override = default;
 
-        //std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) override;
         AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) override;
 };

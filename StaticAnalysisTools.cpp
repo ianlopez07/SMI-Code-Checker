@@ -97,9 +97,9 @@ AnalysisResult GCCAnalyzer::runAnalysis(const SourceCodeFile& sourceCodeFile) {
     }
 
     // Create a test vulnerability to ensure processing works
-    qDebug() << "Adding test vulnerability to verify report generation";
-    Vulnerability testVuln("Test-Type", 1, "This is a test vulnerability", "Medium");
-    result.addVulnerability(testVuln);
+    //qDebug() << "Adding test vulnerability to verify report generation";
+    //Vulnerability testVuln("Test-Type", 1, "This is a test vulnerability", "Medium");
+    //result.addVulnerability(testVuln);
 
     std::istringstream stream(output);
     std::string line;
@@ -146,5 +146,166 @@ AnalysisResult GCCAnalyzer::runAnalysis(const SourceCodeFile& sourceCodeFile) {
     qDebug() << "Processed" << lineCount << "lines with" << matchCount << "matches";
     qDebug() << "Final vulnerability count:" << result.getVulnerabilityCount();
 
+    return result;
+}
+
+AnalysisResult CPPCheckTool::runAnalysis(const SourceCodeFile& sourceCodeFile) {
+    qDebug() << "Starting CPPCheck analysis on file:" << QString::fromStdString(sourceCodeFile.getFilePath());
+    
+    AnalysisResult result(toolName);
+
+    std::string filePath = sourceCodeFile.getFilePath();
+
+    // Full command: cppcheck --enable=all "source.c" 2>&1
+    std::string cppcheckCommand = "cppcheck ";
+    cppcheckCommand += "--enable=all ";
+    cppcheckCommand += "\"" + filePath + "\"";
+    cppcheckCommand += " 2>&1";
+
+    qDebug() << "CPPCheck command:" << QString::fromStdString(cppcheckCommand);
+
+    std::string output = executeCommand(cppcheckCommand);
+    qDebug() << "CPPCheck command executed. Output size:" << output.size();
+
+    // Check for command errors
+    if (output.empty() || output.find("command not found") != std::string::npos) {
+        qDebug() << "CPPCheck might not be installed or not in PATH";
+        Vulnerability vuln("CPPCheck-Error", 0, "CPPCheck might not be installed or not in PATH", "High");
+        result.addVulnerability(vuln);
+        return result;
+    }
+
+    std::istringstream stream(output);
+    std::string line;
+
+    // Regex matching CPPCheck format with optional column and check ID
+    std::regex cppcheckPattern(R"(^(.*?):(\d+):\d+:\s+(error|warning|style|performance|portability|information):\s+(.*?)\s+\[.*\])");
+
+    while (std::getline(stream, line)) {
+        std::smatch matches;
+        qDebug() << "CPPCheck line:" << QString::fromStdString(line);
+
+        if (std::regex_search(line, matches, cppcheckPattern)) {
+            if (matches.size() >= 5) {
+                try {
+                    std::string fileName = matches[1].str();
+                    int lineNumber = std::stoi(matches[2].str());
+                    std::string cppcheckSeverity = matches[3].str();  // error, warning, etc.
+                    std::string description = matches[4].str();
+
+                    // Map to custom severity
+                    std::string severity = "Low";
+                    if (cppcheckSeverity == "error") severity = "High";
+                    else if (cppcheckSeverity == "warning") severity = "Medium";
+
+                    std::string type = "CPPCheck-" + cppcheckSeverity;
+
+                    Vulnerability vuln(type, lineNumber, description, severity);
+                    result.addVulnerability(vuln);
+                    qDebug() << "Added CPPCheck vulnerability at line" << lineNumber;
+                } catch (const std::exception& e) {
+                    qDebug() << "Exception while parsing CPPCheck output:" << e.what();
+                }
+            }
+        } else {
+            qDebug() << "No match for line:" << QString::fromStdString(line);
+        }
+    }
+
+
+    qDebug() << "Final CPPCheck vulnerability count:" << result.getVulnerabilityCount();
+    return result;
+}
+
+
+AnalysisResult Flawfinder::runAnalysis(const SourceCodeFile& sourceCodeFile) {
+    qDebug() << "Starting Flawfinder analysis on file:" << QString::fromStdString(sourceCodeFile.getFilePath());
+    
+    AnalysisResult result(toolName);
+
+    // Test if Flawfinder is available
+    std::string versionCheck = executeCommand("flawfinder --version");
+    if (versionCheck.empty() || versionCheck.find("command not found") != std::string::npos) {
+        qDebug() << "Flawfinder is not installed or not in PATH";
+        Vulnerability vuln("Flawfinder-Error", 0, 
+                           "Flawfinder might not be installed or not in PATH", "High");
+        result.addVulnerability(vuln);
+        
+        // Add a test vulnerability 
+        Vulnerability testVuln("Flawfinder-Test", 2, "This is a test Flawfinder vulnerability", "Medium");
+        result.addVulnerability(testVuln);
+        
+        //return result;
+    }
+
+    // Build the Flawfinder command with simpler output format
+    std::string flawfinderCommand = "flawfinder ";
+    flawfinderCommand += "--csv "; 
+    flawfinderCommand += "--minlevel=1 ";
+    flawfinderCommand += "\"" + sourceCodeFile.getFilePath() + "\"";
+    flawfinderCommand += " 2>&1";
+    
+    qDebug() << "Flawfinder command:" << QString::fromStdString(flawfinderCommand);
+    
+    std::string output = executeCommand(flawfinderCommand);
+    qDebug() << "Flawfinder command executed. Output size:" << output.size();
+    
+    // Add a test vulnerability to ensure processing works
+    Vulnerability testVuln("Flawfinder-Test", 2, "This is a test Flawfinder vulnerability", "Medium");
+    result.addVulnerability(testVuln);
+
+    std::istringstream stream(output);
+    std::string line;
+    
+    // Skip header line
+    std::getline(stream, line);
+    
+    // Process each line
+    while (std::getline(stream, line)) {
+        qDebug() << "Flawfinder line:" << QString::fromStdString(line);
+        
+        // Split by comma with handling for quoted fields
+        std::vector<std::string> fields;
+        std::string currentField;
+        bool inQuotes = false;
+        
+        for (char c : line) {
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                fields.push_back(currentField);
+                currentField.clear();
+            } else {
+                currentField += c;
+            }
+        }
+        fields.push_back(currentField); // Add the last field
+        
+        // Process fields if we have enough
+        if (fields.size() >= 7) {
+            try {
+                std::string filename = fields[0];
+                int lineNumber = std::stoi(fields[1]);
+                std::string level = fields[3];
+                std::string category = fields[4];
+                std::string function = fields[5];
+                std::string description = fields[6];
+                
+                int riskLevel = std::stoi(level);
+                std::string severity = (riskLevel >= 4) ? "High" : 
+                                      (riskLevel >= 2) ? "Medium" : "Low";
+                
+                std::string type = "Flawfinder-" + category;
+                
+                Vulnerability vuln(type, lineNumber, description, severity);
+                result.addVulnerability(vuln);
+                qDebug() << "Added Flawfinder vulnerability at line" << lineNumber;
+            } catch (const std::exception& e) {
+                qDebug() << "Exception while parsing Flawfinder output:" << e.what();
+            }
+        }
+    }
+    
+    qDebug() << "Final Flawfinder vulnerability count:" << result.getVulnerabilityCount();
     return result;
 }

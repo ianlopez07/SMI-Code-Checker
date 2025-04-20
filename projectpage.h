@@ -21,6 +21,8 @@ public:
     ~ProjectPage();
 
     AnalysisResult* getGCCResult() { return &gcc_result; }
+    AnalysisResult* getCPPCheckResult() { return &cppcheck_result; }
+    AnalysisResult* getFlawfinderResult() { return &flawfinder_result; }
 
 public:
     Ui::ProjectPage *ui;
@@ -34,8 +36,12 @@ private slots:
 private:
     MainWindow* m_mainw;  // Store the pointer to MainWindow
     SourceCodeFile* file = nullptr;  // Use a pointer instead of object instance
-    GCCAnalyzer gcc{"test", "test", "test"};
+    GCCAnalyzer gcc{"GCC", "latest", "text"};
+    CPPCheckTool cppcheck{"CPPCheck", "latest", "text"};
+    Flawfinder flawfinder{"Flawfinder", "latest", "text"};
     AnalysisResult gcc_result{"GCC"};
+    AnalysisResult cppcheck_result{"CPPCheck"};
+    AnalysisResult flawfinder_result{"Flawfinder"};
 };
 
 #endif // PROJECTPAGE_H

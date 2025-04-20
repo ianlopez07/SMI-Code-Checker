@@ -85,7 +85,6 @@ void ProjectPage::on_AnalyizeBtn_clicked()
     });
     timer->start(500);
 
-    // Run the selected analysis tools
     if(ui->GCC->isChecked()) {
         qDebug() << "Running GCC analysis...";
         gcc_result = gcc.runAnalysis(*file);
@@ -100,6 +99,18 @@ void ProjectPage::on_AnalyizeBtn_clicked()
             qDebug() << "  Description:" << QString::fromStdString(vulns[i].getDescription());
             qDebug() << "  Severity:" << QString::fromStdString(vulns[i].getSeverity());
         }
+    }
+
+    if(ui->Flawfinder->isChecked()) {
+        qDebug() << "Running Flawfinder analysis...";
+        flawfinder_result = flawfinder.runAnalysis(*file);
+        qDebug() << "Flawfinder analysis completed. Found" << flawfinder_result.getVulnerabilityCount() << "vulnerabilities";
+    }
+    
+    if(ui->CPP->isChecked()) {
+        qDebug() << "Running CPPCheck analysis...";
+        cppcheck_result = cppcheck.runAnalysis(*file);
+        qDebug() << "CPPCheck analysis completed. Found" << cppcheck_result.getVulnerabilityCount() << "vulnerabilities";
     }
 }
 
