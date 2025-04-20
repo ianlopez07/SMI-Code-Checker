@@ -1,3 +1,6 @@
+#include "AnalysisResult.h"
+#include <algorithm>
+
 AnalysisResult::AnalysisResult(std::string toolName) 
     : toolName(std::move(toolName)) {
     // Constructor implementation

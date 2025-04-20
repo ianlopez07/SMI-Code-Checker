@@ -18,7 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //const SourceCodeFile getFile() const { return inpFile; }
+    SourceCodeFile* getFile() { return &inpFile; }
 
 private slots:
     void on_UploadFileBtn_clicked();
@@ -28,6 +28,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    //SourceCodeFile inpFile;
+    SourceCodeFile inpFile{"null"};
 };
 #endif // MAINWINDOW_H

@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     //setting up the UI
     ui->setupUi(this);
     //When Project page button is clicked it will open a new window to project page
-   ProjectPage *FormForm = new ProjectPage;
+    ProjectPage *FormForm = new ProjectPage(this, nullptr);
    connect(ui ->ProjectPageBtn, SIGNAL(clicked(bool)),this, SLOT(hide()));
    connect(ui ->ProjectPageBtn, SIGNAL(clicked(bool)),FormForm, SLOT(show()));
 
@@ -47,9 +47,14 @@ void MainWindow::on_UploadFileBtn_clicked()
             // File exists, process it
             processFile(File_name);
             QMessageBox::information(this, "File has been Successfully uploaded", File_name);
-            //inpFile.setFilePath(File_name);
-            ui->GoprojectPage->setVisible(true);
-            ui->ProjectPageBtn->setVisible(true);
+            inpFile.setFilePath(File_name.toStdString());
+            if(inpFile.validateFile()) {
+                ui->GoprojectPage->setVisible(true);
+                ui->ProjectPageBtn->setVisible(true);
+            }
+            else {
+                QMessageBox::warning(this, tr("Error"), tr("Incorrect File Type!"));
+            }
 
         } else { //If file doesn't exit then it will display "File not found"
             // File does not exist

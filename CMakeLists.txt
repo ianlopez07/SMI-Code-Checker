@@ -32,6 +32,11 @@ qt_add_executable(SMI-Code-Checker
     ${PROJECT_SOURCES}
     projectpage.h projectpage.cpp projectpage.ui
     report.h report.cpp report.ui
+    SourceCodeFile.h SourceCodeFile.cpp
+    StaticAnalysisTools.h StaticAnalysisTools.cpp
+    AnalysisResult.h AnalysisResult.cpp
+    Vulnerability.h Vulnerability.cpp
+    ReportGenerator.h ReportGenerator.cpp
 )
 
 target_link_libraries(SMI-Code-Checker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

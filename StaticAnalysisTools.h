@@ -16,7 +16,7 @@ public:
     virtual ~StaticAnalysisTool() = default;
 
     //virtual std::shared_ptr<AnalysisResult> runAnalysis(const SourceCodeFile& sourceCodeFile) = 0;
-    std::string executeCommand(const char* cmd);
+    std::string executeCommand(std::string cmd);
     virtual AnalysisResult runAnalysis(const SourceCodeFile& sourceCodeFile) = 0;
     
     std::string getToolName() const { return toolName; }

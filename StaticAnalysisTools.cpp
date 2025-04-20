@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <array>
 #include <memory>
+#include <regex>
 #include <stdexcept>
 #include <windows.h>
 #include <process.h>
@@ -14,10 +15,12 @@ StaticAnalysisTool::StaticAnalysisTool(std::string name, std::string setVersion,
     outputFormat = format;
 }
 
-std::string StaticAnalysisTool::executeCommand(const char* cmd) {
+std::string StaticAnalysisTool::executeCommand(std::string cmd) {
     std::array<char, 128> buffer;
     std::string result;
-    FILE* pipe = popen(cmd, "r");
+
+    const char* charPtr = cmd.c_str();
+    FILE* pipe = popen(charPtr, "r");
     
     if (!pipe) {
         return "popen failed!";
@@ -43,8 +46,8 @@ GCCAnalyzer::GCCAnalyzer(std::string name, std::string setVersion, std::string f
 
 }
 
-AnalysisResult GCCAnalyzer::runAnalysis(const SourceCodeFile& sourceCodeFile) override {
-    AnalysisResult *result = new AnalysisResult();
+AnalysisResult GCCAnalyzer::runAnalysis(const SourceCodeFile& sourceCodeFile) {
+    AnalysisResult *result = new AnalysisResult("gcc");
 
     // Build the GCC command with -fanalyzer flag
     std::string gccCommand = "gcc -fanalyzer -c ";
@@ -85,4 +88,6 @@ AnalysisResult GCCAnalyzer::runAnalysis(const SourceCodeFile& sourceCodeFile) ov
             result->addVulnerability(vuln);
         }
     }
+
+    return *result;
 }

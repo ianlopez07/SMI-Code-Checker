@@ -1,4 +1,4 @@
-#include "Report.h"
+#include "ReportGenerator.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>

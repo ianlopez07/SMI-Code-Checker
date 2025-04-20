@@ -1,8 +1,9 @@
 #include "SourceCodeFile.h"
 
 SourceCodeFile::SourceCodeFile(const std::string& path) {
-    filePath, filePathS = path;
-    fileName = filePath.stem();
+    filePathS = path;
+    filePath = path;
+    fileName = filePath.stem().string();
 }
     
 bool SourceCodeFile::validateFile() const { // Validates C/C++ file
@@ -19,7 +20,8 @@ bool SourceCodeFile::validateFile() const { // Validates C/C++ file
     }
 }
 
-void setFilePath(const std::string& path) {
-    filePath, filePathS = path;
-    fileName = filePath.stem();
+void SourceCodeFile::setFilePath(const std::string& path) {
+    filePathS = path;
+    filePath = path;
+    fileName = filePath.stem().string();
 }

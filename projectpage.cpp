@@ -1,10 +1,11 @@
 #include "projectpage.h"
 #include "ui_projectpage.h"
 #include "report.h"
+#include "mainwindow.h"
 #include <QTimer>
 
-ProjectPage::ProjectPage(QWidget *parent)//, *SourceCodeFile inpFile)
-    : QWidget(parent)
+ProjectPage::ProjectPage(MainWindow* mainw, QWidget *parent)
+    : QWidget(parent), m_mainw(mainw)
     , ui(new Ui::ProjectPage)
 {
     //setting up the UI
@@ -22,7 +23,10 @@ ProjectPage::ProjectPage(QWidget *parent)//, *SourceCodeFile inpFile)
     //if analyize button is clicked it points to the function on_AnalyizeBtn_clicked
     connect(ui->AnalyizeBtn, &QPushButton::clicked, this, &ProjectPage::on_AnalyizeBtn_clicked);
 
-    //file = inpFile;
+    // Get the file from MainWindow
+    if (m_mainw) {
+        file = m_mainw->getFile();  // Store pointer instead of copying
+    }
 }
 
 ProjectPage::~ProjectPage()
@@ -62,9 +66,9 @@ void ProjectPage::on_AnalyizeBtn_clicked()
     });
     timer->start(500);
 
-    /*if(ui->GCC->isChecked()) {
-        AnalysisResult gcc_result = gcc.runAnalysis(file);
-    }*/
+    if(ui->GCC->isChecked()) {
+        AnalysisResult gcc_result = gcc.runAnalysis(*file);
+    }
 }
 
 

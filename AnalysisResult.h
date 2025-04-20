@@ -24,4 +24,10 @@ public:
     // Statistics
     int getVulnerabilityCount() const { return vulnerabilities.size(); }
     int getVulnerabilityCountBySeverity(const std::string& severity) const;
+
+    std::vector<std::string> getUniqueVulnerabilityTypes() const;
+    std::map<std::string, int> getVulnerabilityCountByType() const;
+    std::map<int, std::vector<Vulnerability>> getVulnerabilitiesByLine() const;
+    void mergeWith(const AnalysisResult& other);
+    std::vector<Vulnerability> getVulnerabilitiesBySeverity(const std::string& severity) const;
 };
