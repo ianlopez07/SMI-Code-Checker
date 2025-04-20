@@ -3,6 +3,8 @@
 #include "report.h"
 #include "mainwindow.h"
 #include <QTimer>
+#include <QDebug>
+#include <QMessageBox>
 
 ProjectPage::ProjectPage(MainWindow* mainw, QWidget *parent)
     : QWidget(parent), m_mainw(mainw)
@@ -26,7 +28,14 @@ ProjectPage::ProjectPage(MainWindow* mainw, QWidget *parent)
     // Get the file from MainWindow
     if (m_mainw) {
         file = m_mainw->getFile();  // Store pointer instead of copying
+        qDebug() << "Got file pointer from MainWindow";
+    } else {
+        qDebug() << "Warning: MainWindow pointer is null";
     }
+    
+    // Initialize the analysis tool with more descriptive parameters
+    gcc = GCCAnalyzer("GCC", "latest", "text");
+    qDebug() << "GCC analyzer initialized";
 }
 
 ProjectPage::~ProjectPage()
@@ -36,6 +45,8 @@ ProjectPage::~ProjectPage()
 
 void ProjectPage::on_AnalyizeBtn_clicked()
 {
+    qDebug() << "Analyze button clicked";
+    
     //Sets the visibility to the progress bar as true
     ui->progressBar->setVisible(true);
     //Sets the range of the progress bar from 0 to 100
@@ -43,10 +54,19 @@ void ProjectPage::on_AnalyizeBtn_clicked()
     //Sets the starting value of the progress bar to 0
     ui->progressBar->setValue(0);
 
+    // Check if file is valid
+    if (file) {
+        qDebug() << "File is valid, path:" << QString::fromStdString(file->getFilePath());
+    } else {
+        qDebug() << "Error: File pointer is null";
+        QMessageBox::warning(this, tr("Error"), tr("No file selected for analysis"));
+        return;
+    }
+
     //Intializes time and points to a new timer
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, [this, timer]()
-{
+    {
         //Sets the porgress variabler to 0
         static int progress = 0;
         //incremenets progress by 10
@@ -61,16 +81,27 @@ void ProjectPage::on_AnalyizeBtn_clicked()
             //Sets the progress bar's visibility to false and reports page button's visibility to true
             ui->progressBar->setVisible(false);
             ui->ReportspageBtn->setVisible(true);
-
         }
     });
     timer->start(500);
 
+    // Run the selected analysis tools
     if(ui->GCC->isChecked()) {
+        qDebug() << "Running GCC analysis...";
         gcc_result = gcc.runAnalysis(*file);
+        qDebug() << "GCC analysis completed. Found" << gcc_result.getVulnerabilityCount() << "vulnerabilities";
+        
+        // Output each vulnerability for debugging
+        const auto& vulns = gcc_result.getVulnerabilities();
+        for (size_t i = 0; i < vulns.size(); i++) {
+            qDebug() << "Vulnerability" << i + 1 << ":";
+            qDebug() << "  Type:" << QString::fromStdString(vulns[i].getType());
+            qDebug() << "  Line:" << vulns[i].getLine();
+            qDebug() << "  Description:" << QString::fromStdString(vulns[i].getDescription());
+            qDebug() << "  Severity:" << QString::fromStdString(vulns[i].getSeverity());
+        }
     }
 }
-
 
 void ProjectPage::on_GCC_checkStateChanged(const Qt::CheckState &arg1)
 {
