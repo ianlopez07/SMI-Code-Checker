@@ -7,7 +7,7 @@
 ReportGenerator::ReportGenerator(const std::string& format)
     : reportFormat(format) {}
 
-void ReportGenerator::addAnalysisResult(std::shared_ptr<AnalysisResult> result) {
+void ReportGenerator::addAnalysisResult(AnalysisResult result) {
     analysisResults.push_back(result);
 }
 
@@ -35,8 +35,8 @@ void ReportGenerator::generateCSVReport(const std::string& outputPath) const {
     out << "ToolName,VulnerabilityType,Line,Description,Severity\n";
 
     for (const auto& result : analysisResults) {
-        for (const auto& vuln : result->getVulnerabilities()) {
-            out << result->getToolName() << ","
+        for (const auto& vuln : result.getVulnerabilities()) {
+            out << result.getToolName() << ","
                 << vuln.getType() << ","
                 << vuln.getLine() << ","
                 << "\"" << vuln.getDescription() << "\","
@@ -76,8 +76,8 @@ void ReportGenerator::generatePDFReport(const std::string& outputPath) const {
     out << "=== Static Analysis Report ===\n\n";
 
     for (const auto& result : analysisResults) {
-        out << "Tool: " << result->getToolName() << "\n";
-        for (const auto& vuln : result->getVulnerabilities()) {
+        out << "Tool: " << result.getToolName() << "\n";
+        for (const auto& vuln : result.getVulnerabilities()) {
             out << "Line " << vuln.getLine() << ": "
                 << vuln.getType() << " - "
                 << vuln.getSeverity() << "\n"
