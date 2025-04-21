@@ -41,15 +41,15 @@
   <widget class="QRadioButton" name="csvRadioBtn">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>440</y>
-     <width>61</width>
-     <height>26</height>
+     <x>350</x>
+     <y>180</y>
+     <width>71</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>12</pointsize>
+     <pointsize>16</pointsize>
     </font>
    </property>
    <property name="styleSheet">
@@ -62,10 +62,31 @@
   <widget class="QRadioButton" name="jsonRadioBtn">
    <property name="geometry">
     <rect>
-     <x>690</x>
-     <y>480</y>
-     <width>71</width>
+     <x>350</x>
+     <y>240</y>
+     <width>81</width>
      <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>.PDF</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DownloadBtn">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>380</y>
+     <width>131</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
@@ -74,27 +95,53 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>.json</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="DownloadBtn">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>520</y>
-     <width>83</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
     <string notr="true">background-color: rgb(0, 204, 150);
 color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>Download</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>80</y>
+     <width>441</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Please select a format for the report download</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>310</y>
+     <width>661</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Click the download and select where the report download will be located</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
  </widget>
