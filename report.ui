@@ -59,7 +59,7 @@
     <string>.csv</string>
    </property>
   </widget>
-  <widget class="QRadioButton" name="jsonRadioBtn">
+  <widget class="QRadioButton" name="pdfRadioBtn">
    <property name="geometry">
     <rect>
      <x>350</x>
