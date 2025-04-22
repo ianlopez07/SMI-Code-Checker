@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-//#include <nlohmann/json.hpp> // I think I need this for json file generation  
+#include <iomanip>
 
 ReportGenerator::ReportGenerator(const std::string& format)
     : reportFormat(format) {}
@@ -32,59 +32,98 @@ void ReportGenerator::exportReport(const std::string& outputPath) const {
 // CSV 
 void ReportGenerator::generateCSVReport(const std::string& outputPath) const {
     std::ofstream out(outputPath);
-    out << "ToolName,VulnerabilityType,Line,Description,Severity\n";
+    if (!out.is_open()) return;
 
-    for (const auto& result : analysisResults) {
-        for (const auto& vuln : result.getVulnerabilities()) {
-            out << result.getToolName() << ","
-                << vuln.getType() << ","
-                << vuln.getLine() << ","
-                << "\"" << vuln.getDescription() << "\","
-                << vuln.getSeverity() << "\n";
-        }
-    }
+    out << "=============================\n";
+    out << "     Static Analysis Report  \n";
+    out << "=============================\n\n";
 
-    out.close();
-}
-
-// JSON ??
-/*void ReportGenerator::generateJSONReport(const std::string& outputPath) const {
-    nlohmann::json j;
-
-    for (const auto& result : analysisResults) {
-        nlohmann::json toolReport;
-        toolReport["tool"] = result->getToolName();
-        for (const auto& vuln : result->getVulnerabilities()) {
-            toolReport["vulnerabilities"].push_back({
-                {"type", vuln.getType()},
-                {"line", vuln.getLine()},
-                {"description", vuln.getDescription()},
-                {"severity", vuln.getSeverity()}
-            });
-        }
-        j["reports"].push_back(toolReport);
-    }
-
-    std::ofstream out(outputPath);
-    out << j.dump(4);  
-    out.close();
-}*/
-
-// MPDF generation
-void ReportGenerator::generatePDFReport(const std::string& outputPath) const {
-    std::ofstream out(outputPath);
-    out << "=== Static Analysis Report ===\n\n";
+    // Tool Summary
+    out << "Tool Summary:\n\n";
 
     for (const auto& result : analysisResults) {
         out << "Tool: " << result.getToolName() << "\n";
-        for (const auto& vuln : result.getVulnerabilities()) {
-            out << "Line " << vuln.getLine() << ": "
-                << vuln.getType() << " - "
-                << vuln.getSeverity() << "\n"
-                << "Description: " << vuln.getDescription() << "\n\n";
-        }
-        out << "-------------------------------------\n";
+        out << "Vulnerability Count: " << result.getVulnerabilityCount() << "\n";
+        out << "Critical: " << result.getVulnerabilityCountBySeverity("Critical") << "\n";
+        out << "High: " << result.getVulnerabilityCountBySeverity("High") << "\n";
+        out << "Medium: " << result.getVulnerabilityCountBySeverity("Medium") << "\n";
+        out << "Low: " << result.getVulnerabilityCountBySeverity("Low") << "\n";
+        out << "-----------------------------\n";
     }
+
+    // Detailed Vulnerabilities
+    out << "\nDetailed Vulnerabilities:\n";
+    out << "--------------------------------------------------------------------------------------------\n";
+    out << std::left
+        << std::setw(15) << "ToolName"
+        << std::setw(20) << "Type"
+        << std::setw(6)  << "Line"
+        << std::setw(10) << "Severity"
+        << "Description" << "\n";
+    out << "--------------------------------------------------------------------------------------------\n";
+
+    for (const auto& result : analysisResults) {
+        for (const auto& vuln : result.getVulnerabilities()) {
+            out << std::left
+                << std::setw(15) << result.getToolName()
+                << std::setw(20) << vuln.getType()
+                << std::setw(6)  << vuln.getLine()
+                << std::setw(10) << vuln.getSeverity()
+                << "\"" << vuln.getDescription() << "\"" << "\n";  // Add quotes for CSV formatting
+        }
+    }
+
+    out << "--------------------------------------------------------------------------------------------\n";
+    out.close();
+}
+
+
+// PDF 
+void ReportGenerator::generatePDFReport(const std::string& outputPath) const {
+    std::ofstream out(outputPath);
+    if (!out.is_open()) return;
+
+    out << "=============================\n";
+    out << "     Static Analysis Report  \n";
+    out << "=============================\n\n";
+
+    // Tool Summary
+    out << "Tool Summary:\n\n";
+
+    for (const auto& result : analysisResults) {
+        out << "Tool: " << result.getToolName() << "\n";
+        out << "Vulnerability Count: " << result.getVulnerabilityCount() << "\n";
+        out << "Critical: " << result.getVulnerabilityCountBySeverity("Critical") << "\n";
+        out << "High: " << result.getVulnerabilityCountBySeverity("High") << "\n";
+        out << "Medium: " << result.getVulnerabilityCountBySeverity("Medium") << "\n";
+        out << "Low: " << result.getVulnerabilityCountBySeverity("Low") << "\n";
+        out << "-----------------------------\n";
+    }
+
+    // Detailed Vulnerabilities
+    out << "\nDetailed Vulnerabilities:\n";
+    out << "--------------------------------------------------------------------------------------------\n";
+    out << std::left
+        << std::setw(15) << "ToolName"
+        << std::setw(20) << "Type"
+        << std::setw(6)  << "Line"
+        << std::setw(10) << "Severity"
+        << "Description" << "\n";
+    out << "--------------------------------------------------------------------------------------------\n";
+
+    for (const auto& result : analysisResults) {
+        for (const auto& vuln : result.getVulnerabilities()) {
+            out << std::left
+                << std::setw(15) << result.getToolName()
+                << std::setw(20) << vuln.getType()
+                << std::setw(6)  << vuln.getLine()
+                << std::setw(10) << vuln.getSeverity()
+                << vuln.getDescription() << "\n";
+        }
+    }
+
+    out << "--------------------------------------------------------------------------------------------\n";
 
     out.close();
 }
+
