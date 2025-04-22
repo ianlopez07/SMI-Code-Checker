@@ -232,8 +232,8 @@ AnalysisResult Flawfinder::runAnalysis(const SourceCodeFile& sourceCodeFile) {
         result.addVulnerability(vuln);
         
         // Add a test vulnerability 
-        Vulnerability testVuln("Flawfinder-Test", 2, "This is a test Flawfinder vulnerability", "Medium");
-        result.addVulnerability(testVuln);
+        //Vulnerability testVuln("Flawfinder-Test", 2, "This is a test Flawfinder vulnerability", "Medium");
+        //result.addVulnerability(testVuln);
         
         //return result;
     }

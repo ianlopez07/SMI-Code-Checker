@@ -77,7 +77,7 @@
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>.PDF</string>
+    <string>.pdf</string>
    </property>
   </widget>
   <widget class="QPushButton" name="DownloadBtn">
